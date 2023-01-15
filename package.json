@@ -4,7 +4,7 @@
   "description": "",
   "source": "index.html",
   "scripts": {
-    "build": "parcel build --dist-dir ./docs",
+    "build": "parcel build --dist-dir ./docs --no-source-maps --public-url interstellar-tonejs",
     "dev": "parcel"
   },
   "author": "",
