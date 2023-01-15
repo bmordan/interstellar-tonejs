@@ -32,32 +32,29 @@ const lower = [
 ]
 
 document.getElementById('play').addEventListener('click', () => {
-    const synth = new Tone.PolySynth(Tone.Synth, {
-        oscillator: {
-            type: "sine"
-        },
-        envelope: {
-            attack: 0.01,
-            decay: 0.1,
-            sustain: 0.9,
-            release: 0.5,
-            attackCurve: "exponential"
-        }
-    }).toDestination()
-
-    const upperPart = new Tone.Part((time, value) => {
-        synth.triggerAttackRelease(value.note, value.duration, time)
-    }, upper).start(0)
-
-    const lowerPart = new Tone.Part((time, value) => {
-        synth.triggerAttackRelease(value.note, value.duration, time)
-    }, lower).start(0)
-
-    upperPart.loop = false
-    lowerPart.loop = false
-
-    Tone.Transport.bpm.value = 144
-    Tone.Transport.start();
+    Tone.context.resume().then(() => {
+        const synth = new Tone.PolySynth(Tone.Synth, {
+            attack: 0.1,
+            decay: 0.2,
+            sustain: 1.0,
+            release: 0.8
+        }).toDestination()
+    
+        const upperPart = new Tone.Part((time, value) => {
+            synth.triggerAttackRelease(value.note, value.duration, time)
+        }, upper).start(0)
+    
+        const lowerPart = new Tone.Part((time, value) => {
+            synth.triggerAttackRelease(value.note, value.duration, time)
+        }, lower).start(0)
+    
+        upperPart.loop = false
+        lowerPart.loop = false
+    
+        Tone.Transport.bpm.value = 144
+        Tone.Transport.start();
+    })
+    
 })
 
 document.getElementById('stop').addEventListener('click', () => {
